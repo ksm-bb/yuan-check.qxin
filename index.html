@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
+   <!-- 🖼️ [แก้ได้] เปลี่ยน favicon / app icon โดยแก้ URL ในทั้ง 3 บรรทัดนี้ -->
+  <link rel="apple-touch-icon" href="https://i.ibb.co/RTCMSz2M/S-4816905.jpg">
+  <link rel="icon" sizes="192x192" href="https://i.ibb.co/RTCMSz2M/S-4816905.jpg">
+  <link rel="shortcut icon" href="https://i.ibb.co/RTCMSz2M/S-4816905.jpg">
+  
+  <meta name="apple-mobile-web-app-title" content="♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ >
+  <meta name="application-name" content="♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ ">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <meta name="theme-color" content="#F5FAFD">
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo, useEffect, useCallback } = React;
+
+    // ==========================================
+    // 🖼️ 📝 โน้ต: รวมไอคอน SVG ของเว็บ
+    // ==========================================
+    const IconPlus = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>;
+    const IconHome = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>;
+    const IconSearch = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>;
+    const IconClock = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
+    const IconCheck = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>;
+    const IconFileText = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>;
+    const IconCalendar = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>;
+    const IconLoader = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>;
+    const IconEye = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>;
+    const IconEyeOff = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>;
+    const IconImage = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>;
+    const IconList = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>;
+    const IconChevronLeft = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="15 18 9 12 15 6"></polyline></svg>;
+    const IconChevronRight = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="9 18 15 12 9 6"></polyline></svg>;
+    const IconTrash = ({size=24, className=""}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>;
+
+    // ==========================================
+    // 🎨 📝 โน้ตสี: ตัวแปรหลักที่ใช้ควบคุมสีทั้งหมดในเว็บ
+    // ==========================================
+    const COLORS = {
+      blue: '#BCE2F4',      // สีของป้ายสถานะหรือพื้นหลังอ่อนๆ
+      pink: '#E2F1F8',      // สีหลักของกลีบดอกไม้ และพื้นหลังบางจุด
+      purple: '#FCF6DE',    // สีไฮไลท์จุดสว่าง
+      orange: '#fffae7',    // สีเกสรดอกไม้ และสีขอบ
+      bg: '#F5FAFD',        // สีพื้นหลังรวมของหน้าเว็บทั้งหมด
+      white: '#fffbf0',     // สีขาว (การ์ด, ตัวอักษรบนพื้นเข้ม)
+      textMain: '#75acd1', // สีตัวอักษรหลัก (Headings, ตัวเลขใหญ่ๆ)
+      textSoft: '#4B6580', // สีตัวอักษรรอง (Subtext)
+      pinkDeep: '#6CA9D6', // สีเน้น (ปุ่ม, จุดที่ต้องการให้เด่น)
+      blueDeep: '#2A5C82', // สีตัวอักษรบนป้ายสถานะที่ต้องการความคมชัด
+      purpleDeep: '#75acd1', // สีตัวเลขเปอร์เซ็นต์ % หรือป้าย Channel
+      orangeDeep: '#5898C4', // สีปุ่มกด, แถบสถานะ Channel
+    };
+
+    const formatDriveLink = (url) => {
+      if (!url) return '';
+      const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://lh3.googleusercontent.com/d/${match[1]}`; 
+      }
+      return url; 
+    };
+
+    // ==========================================
+    // ✨ แยก COMPONENTS ออกมานอกฟังก์ชัน APP เพื่อแก้ปัญหาหน่วง
+    // ==========================================
+
+    const FluffyCloud = React.memo(({ top, left, right, bottom, scale = 1, opacity = 0.7, delay = '0s', reverse = false }) => (
+      <div className="absolute pointer-events-none drop-shadow-sm z-0" style={{ top, left, right, bottom, opacity, transform: `scale(${scale})` }}>
+        <div className={reverse ? 'animate-float-reverse' : 'animate-float'} style={{ animationDelay: delay }}>
+          <div className="relative w-40 h-16">
+            <div className="absolute bottom-0 left-4 w-32 h-10 bg-white/90 rounded-full"></div>
+            <div className="absolute bottom-2 left-2 w-14 h-14 bg-white/90 rounded-full"></div>
+            <div className="absolute bottom-5 left-10 w-16 h-16 bg-white/90 rounded-full"></div>
+            <div className="absolute bottom-1 right-2 w-14 h-14 bg-white/90 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    ));
+
+    const DynamicBackground = React.memo(() => (
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[10%] left-[-10%] w-72 h-72 rounded-full blur-[90px] opacity-40 animate-float" style={{ backgroundColor: COLORS.pink }}></div>
+        <div className="absolute bottom-[10%] right-[-10%] w-80 h-80 rounded-full blur-[100px] opacity-30 animate-float-reverse" style={{ backgroundColor: COLORS.blue }}></div>
+        <div className="absolute top-[40%] right-[10%] w-48 h-48 rounded-full blur-[80px] opacity-20 animate-float" style={{ backgroundColor: COLORS.purple }}></div>
+        <FluffyCloud top="8%" left="-5%" scale={1.5} opacity={0.6} delay="0s" />
+        <FluffyCloud top="35%" left="-15%" scale={2.5} opacity={0.3} delay="2.5s" />
+        <FluffyCloud bottom="20%" left="5%" scale={1.6} opacity={0.6} delay="3s" />
+        <FluffyCloud top="50%" right="-5%" scale={1.8} opacity={0.5} delay="1s" reverse={true} />
+      </div>
+    ));
+
+    const Header = React.memo(({ isAdmin, setIsAdmin, setShowAuthModal, handleImageUpload, profileImage }) => (
+      <div className="px-5 pt-6 pb-2 relative z-10">
+        <div className="bg-white/40 backdrop-blur-md rounded-[32px] p-4 shadow-xl shadow-[#6CA9D6]/20 border border-white/50 flex items-center justify-between h-20 relative overflow-hidden group">
+          <div className="absolute left-6 top-1/2 -translate-y-1/2 w-24 h-8 bg-[#9BCBE8]/40 blur-xl rounded-full"></div>
+          <div className="flex flex-col justify-center ml-2 relative z-10">
+            <div className="flex items-center gap-1">
+              <h1 className="text-2xl font-black italic tracking-tighter flex">
+                {"♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ ".split('').map((char, index) => (
+                  <span
+                    key={index}
+                    className={`bg-gradient-to-br from-[#99C3E4] to-[#C1E4F3] bg-clip-text text-transparent drop-shadow-sm inline-block animate-text-wave pb-2 ${char === ' ' ? 'w-2.5' : 'pr-[1.5px]'}`}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </h1>
+              <button onClick={() => isAdmin ? setIsAdmin(false) : setShowAuthModal(true)} className={`px-1.5 py-0.5 ml-1 rounded-full text-[7px] font-black uppercase tracking-widest border shadow-sm transition-all active:scale-95 ${isAdmin ? 'bg-white/60 text-[#6CA9D6] border-[#FCF6DE]' : 'bg-gray-100/80 text-gray-400 border-gray-200'}`}>
+                {isAdmin ? 'Admin' : 'Guest'}
+              </button>
+            </div>
+            <div className="flex items-center gap-1.5 opacity-70">
+              <div className="w-3 h-[1px]" style={{ backgroundColor: COLORS.pinkDeep }}></div>
+              <p className="text-[8px] font-black tracking-[0.5em] uppercase" style={{ color: COLORS.purpleDeep }}>Check Q</p>
+            </div>
+          </div>
+          <div onClick={isAdmin ? handleImageUpload : undefined} className={`w-16 h-16 rounded-[1.25rem] bg-white border-2 border-white flex items-center justify-center relative overflow-hidden transition-transform ${isAdmin ? 'cursor-pointer hover:scale-105 active:scale-95' : ''}`}>
+            {profileImage ? (
+              <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <>
+                <div className="absolute inset-0 opacity-40" style={{ background: `linear-gradient(to top right, ${COLORS.pink}, ${COLORS.blue})` }}></div>
+                <span className="text-2xl relative z-10 select-none">🐰</span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    ));
+
+    const ProgressFlower = React.memo(({ progress, todayTasksLength, doneToday, triggerFlowerBounce, isBouncing }) => {
+      const bloomScale = Math.max(0.2, progress / 100);
+      const isFullBloom = progress === 100 && todayTasksLength > 0;
+      const petals = [0, 72, 144, 216, 288].map(angle => {
+        const rad = (angle * Math.PI) / 180;
+        return { cx: 50 + 15 * Math.sin(rad), cy: 50 - 15 * Math.cos(rad), r: 18 };
+      });
+
+      return (
+        <div onClick={triggerFlowerBounce} className={`bg-white/80 backdrop-blur-sm rounded-[28px] p-3 flex flex-col items-center justify-center shadow-lg shadow-[#6CA9D6]/20 border border-white h-full relative overflow-hidden transition-all duration-300 cursor-pointer ${isBouncing ? 'scale-95' : 'hover:scale-[1.02]'}`}>
+          <div className="absolute top-2 left-3 text-[8px] font-black text-purpleDeep uppercase tracking-tighter opacity-70" style={{ color: COLORS.purpleDeep }}>ความสำเร็จวันนี้</div>
+          <div className="relative w-full h-20 flex items-center justify-center mt-2">
+            {progress > 0 && (
+              <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute top-1/2 left-1/4 w-1.5 h-1.5 bg-[#6CA9D6] rounded-full animate-float-particle-1 opacity-60"></div>
+                  <div className="absolute top-2/3 right-1/4 w-2 h-2 bg-[#1E3A5F] rounded-full animate-float-particle-2 opacity-60"></div>
+                  <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-[#FCF6DE] rounded-full animate-float-particle-3 opacity-60"></div>
+              </div>
+            )}
+            <svg viewBox="0 0 100 100" className="w-20 h-20 overflow-visible">
+              <g transform="translate(50, 50)">
+                  <g className="animate-breathe">
+                    <g transform={`scale(${bloomScale})`} className="transition-transform duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1)">
+                      <g transform="translate(-50, -50)">
+                        {petals.map((p, i) => (
+                          <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill={COLORS.pink} opacity="0.95" className="transition-all duration-700"/>
+                        ))}
+                        <circle cx="50" cy="50" r="14" fill={COLORS.orange} className="transition-all duration-700" />
+                        
+                        {isFullBloom && (
+                          <g transform="translate(50, 50)" className="animate-fade-in">
+                            <path d="M -5 -1 Q -3 -3 -1 -1" fill="none" stroke="#1E3A5F" strokeWidth="1.2" strokeLinecap="round" />
+                            <path d="M 1 -1 Q 3 -3 5 -1" fill="none" stroke="#1E3A5F" strokeWidth="1.2" strokeLinecap="round" />
+                            <path d="M -1.5 2 Q 0 4 1.5 2" fill="none" stroke="#1E3A5F" strokeWidth="1.2" strokeLinecap="round" />
+                            <ellipse cx="-6" cy="1" rx="1.5" ry="1" fill="#6CA9D6" opacity="0.6"/>
+                            <ellipse cx="6" cy="1" rx="1.5" ry="1" fill="#6CA9D6" opacity="0.6"/>
+                          </g>
+                        )}
+                      </g>
+                    </g>
+                  </g>
+              </g>
+            </svg>
+          </div>
+          <div className="mt-1 flex items-center gap-1 bg-white/60 px-2 py-0.5 rounded-full border border-white z-10">
+            <span className="text-xs font-black" style={{ color: COLORS.purpleDeep }}>{progress}%</span>
+            <div className="w-1 h-1 rounded-full bg-[#FCF6DE]"></div>
+            <span className="text-[8px] font-bold text-gray-400 uppercase">{doneToday} / {todayTasksLength} งาน</span>
+          </div>
+        </div>
+      );
+    });
+
+    const CompactStats = React.memo(({ isAdmin, selectedNextDate, nextQueueDate, handleSetManualDate, waitingCount }) => (
+      <div className="bg-white/80 backdrop-blur-sm rounded-[28px] p-1 shadow-lg shadow-[#6CA9D6]/20 border border-white h-full flex overflow-hidden relative group transition-all">
+          <div className={`flex-1 flex flex-col justify-center items-center p-2 relative rounded-l-[24px] transition-colors overflow-hidden ${isAdmin ? 'hover:bg-white/50 cursor-pointer' : ''}`} style={{ backgroundColor: `${COLORS.orange}66` }}>
+            {isAdmin && (
+              <input type="date" className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" value={selectedNextDate || nextQueueDate} onChange={(e) => handleSetManualDate(e.target.value)} />
+            )}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[7px] font-black bg-white shadow-sm border border-[#FCF6DE] uppercase tracking-wider whitespace-nowrap" style={{ color: COLORS.orangeDeep }}>NEXT QUEUE</div>
+            
+            <div className="flex flex-col items-center mt-1 relative z-0 pointer-events-none">
+              <span className="text-3xl font-black leading-none tracking-tighter" style={{ color: COLORS.textMain }}>{new Date(nextQueueDate).getDate()}</span>
+              <span className="text-[8px] font-black opacity-80 uppercase mt-0.5" style={{ color: COLORS.orangeDeep }}>{new Date(nextQueueDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+            </div>
+
+            {isAdmin && selectedNextDate && (
+              <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSetManualDate(''); }} className="absolute bottom-1.5 left-1/2 -translate-x-1/2 z-20 px-2.5 py-0.5 rounded-md text-[7px] font-black bg-white shadow-sm border border-[#FCF6DE] hover:bg-[#BCE2F4] active:scale-90 transition-all" style={{ color: COLORS.pinkDeep }} title="กลับไปคำนวณวันว่างอัตโนมัติ">AUTO</button>
+            )}
+          </div>
+          <div className="w-[1px] bg-white/60 my-4 rounded-full"></div>
+          
+          <div className="flex-1 flex flex-col justify-center items-center p-2 relative">
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-md text-[7px] font-black bg-white shadow-sm border border-[#FCF6DE] uppercase tracking-wider whitespace-nowrap z-10" style={{ color: COLORS.blueDeep }}>จำนวนคิวก่อนหน้า</div>
+            
+            <div className="relative mt-5 flex flex-col items-center">
+               <div className="relative">
+                 <div className="absolute inset-0 blur-lg rounded-full opacity-40 scale-125" style={{ backgroundColor: COLORS.blue }}></div>
+                 <div className="w-11 h-11 rounded-full bg-white flex flex-col items-center justify-center shadow-[inset_0_2px_8px_rgba(0,0,0,0.02)] border-2 border-white relative z-10" style={{ borderColor: COLORS.blue }}>
+                    <span className="text-xl font-black leading-none" style={{ color: COLORS.blueDeep }}>{waitingCount}</span>
+                 </div>
+               </div>
+               <span className="text-[8px] font-black opacity-60 uppercase mt-1.5 relative z-10" style={{ color: COLORS.blueDeep }}>คิว</span>
+            </div>
+          </div>
+      </div>
+    ));
+
+    const TaskCard = React.memo(({ task, isAdmin, onEdit, onToggleDoing, onToggleStatus }) => (
+      <div onClick={() => isAdmin && onEdit(task)} className={`relative rounded-[22px] p-3 transition-all border shadow-sm group bg-white/90 ${isAdmin ? 'active:scale-[0.97] cursor-pointer' : ''}`} style={{ backgroundColor: task.status === 'done' ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.95)', borderColor: task.status === 'doing' ? COLORS.orangeDeep : (task.status === 'done' ? 'transparent' : COLORS.white), opacity: task.status === 'done' ? 0.7 : 1 }}>
+        {task.status === 'doing' && (
+           <div className="absolute inset-0 pointer-events-none z-0">
+             <div className="absolute -bottom-2 -left-3 text-[14px] animate-float-particle-1 drop-shadow-sm">☁️</div>
+             <div className="absolute top-[30%] -left-4 text-[10px] animate-float-particle-3 drop-shadow-sm" style={{ animationDelay: '1.5s' }}>☁️</div>
+             <div className="absolute -bottom-2 -right-3 text-[14px] animate-float-particle-2 drop-shadow-sm" style={{ animationDelay: '0.5s' }}>☁️</div>
+             <div className="absolute top-[30%] -right-4 text-[10px] animate-float-particle-1 drop-shadow-sm" style={{ animationDelay: '1.2s' }}>☁️</div>
+           </div>
+        )}
+        <div className="absolute left-2 top-3 bottom-3 w-1 rounded-full shadow-sm z-10" style={{ backgroundColor: task.channel === 'LINE' ? '#D5EDB5' : task.channel === 'FB' || task.channel === 'FACEBOOK' ? '#C0D5E9' : task.channel === 'IG' ? '#FFD3DE' : COLORS.purpleDeep }}></div>
+        <div className="pl-3 pr-1 relative z-10">
+          <div className="flex justify-between items-start mb-1">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-bold text-base truncate" style={{ color: COLORS.textMain }}>{task.client}</span>
+              <span className={`text-[7px] px-1.5 py-0.5 rounded-md font-black uppercase border ${task.channel === 'LINE' ? 'text-[#b8d394] bg-[#e7f9d4]/10 border-[#b8d394]/20' : task.channel === 'FB' || task.channel === 'FACEBOOK' ? 'text-[#2A5C82] bg-[#6CA9D6]/10 border-[#6CA9D6]/20' : task.channel === 'IG' ? 'text-[#A38A30] bg-[#FCF6DE]/50 border-[#D4B856]/30' : 'bg-white/50 text-gray-400 border-gray-100'}`}>{task.channel}</span>
+              {task.priority === 'urgent' && <span className="text-[9px] font-bold animate-pulse bg-white px-2 py-0.5 rounded-full shadow-sm" style={{ color: COLORS.pinkDeep }}>🔥 ด่วน</span>}
+            </div>
+            <div className="flex items-center gap-1 text-[9px] font-black bg-[#BCE2F4]/80 px-2.5 py-0.5 rounded-lg border border-[#FCF6DE] shadow-sm" style={{ color: COLORS.pinkDeep }}>
+                <IconCalendar size={11} style={{ color: COLORS.pinkDeep }} />
+                {new Date(task.deadline).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+            </div>
+          </div>
+          <div className="flex justify-between items-end mt-1">
+            <div className="flex-1 min-w-0 mr-4 flex flex-col">
+              <span className={`text-[10px] font-bold truncate ${task.status === 'done' ? 'line-through text-gray-300' : 'text-gray-400'}`}>{task.type}</span>
+              {task.details && <span className={`text-[11px] font-medium truncate mt-0.5 ${task.status === 'done' ? 'text-gray-300' : 'text-gray-600'}`}>{task.details}</span>}
+            </div>
+
+            {isAdmin ? (
+              <div className="flex gap-1.5">
+                <button onClick={(e) => onToggleDoing(e, task.id)} className={`relative w-[28px] h-[28px] rounded-[8px] flex items-center justify-center transition-all active:scale-90 shadow-[0_3px_10px_rgba(188,226,244,1)] border-[2px] border-white/80 ${task.status === 'doing' ? 'bg-[#E2F1F8]' : 'bg-white'}`} style={{ color: task.status === 'doing' ? COLORS.orangeDeep : '#B0BEC5' }}>
+                  <div className={`${task.status === 'doing' ? 'animate-spin-slow' : ''} flex items-center justify-center`}><IconLoader size={14} /></div>
+                </button>
+                <button onClick={(e) => onToggleStatus(e, task.id)} className={`relative w-[28px] h-[28px] rounded-[8px] flex items-center justify-center transition-all active:scale-90 shadow-[0_3px_10px_rgba(188,226,244,1)] border-[2px] border-white/80 ${task.status === 'done' ? 'bg-[#BCE2F4]' : 'bg-white'}`} style={{ color: task.status === 'done' ? COLORS.pinkDeep : '#B0BEC5' }}>
+                  <IconCheck size={16} />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                {task.status === 'doing' && <span className="text-[10px] font-bold text-[#4B6580] flex items-center gap-1 bg-[#E2F1F8] px-2 py-1 rounded-md border border-[#FCF6DE] shadow-sm"><IconLoader size={10} className="animate-spin-slow"/> กำลังทำ</span>}
+                {task.status === 'done' && <span className="text-[10px] font-bold text-[#6CA9D6] flex items-center gap-1 bg-white px-2 py-1 rounded-md border border-[#FCF6DE] shadow-sm"><IconCheck size={10} /> เสร็จแล้ว</span>}
+                {task.status === 'todo' && <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md border border-gray-100 shadow-sm"><IconClock size={10} /> รอคิว</span>}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ));
+
+    const CalendarView = React.memo(({ currentMonth, setCurrentMonth, selectedDate, setSelectedDate, today, tasks }) => {
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDay = new Date(year, month, 1).getDay(); 
+
+      const days = [];
+      for (let i = 0; i < firstDay; i++) days.push(null); 
+      for (let i = 1; i <= daysInMonth; i++) days.push(i);
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      return (
+        <div className="bg-white/90 backdrop-blur-xl rounded-[32px] p-5 shadow-[0_12px_30px_rgba(188,226,244,0.8)] border-[4px] border-white mb-5 animate-fadeIn">
+          <div className="flex justify-between items-center mb-4 px-2">
+            <button onClick={() => setCurrentMonth(new Date(year, month - 1, 1))} className="p-1.5 hover:bg-[#BCE2F4] rounded-full transition-colors text-[#4B6580]"><IconChevronLeft size={20}/></button>
+            <h3 className="font-black text-[16px] text-[#1E3A5F] tracking-widest">{monthNames[month]} {year}</h3>
+            <button onClick={() => setCurrentMonth(new Date(year, month + 1, 1))} className="p-1.5 hover:bg-[#BCE2F4] rounded-full transition-colors text-[#4B6580]"><IconChevronRight size={20}/></button>
+          </div>
+          
+          <div className="grid grid-cols-7 gap-1 text-center mb-3">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+              <div key={d} className="text-[9px] font-black text-[#4B6580] opacity-60 uppercase">{d}</div>
+            ))}
+          </div>
+          
+          <div className="grid grid-cols-7 gap-y-3 gap-x-1 text-center">
+            {days.map((day, index) => {
+              if (!day) return <div key={`empty-${index}`} className="h-10"></div>;
+              
+              const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+              const isSelected = selectedDate === dateStr;
+              const isToday = today === dateStr;
+              const hasTasks = tasks.some(t => t.deadline === dateStr); 
+
+              return (
+                <div key={dateStr} className="flex justify-center items-center h-10">
+                  <div onClick={() => setSelectedDate(dateStr)} className={`relative w-10 h-10 flex flex-col items-center justify-center cursor-pointer transition-all ${isSelected ? 'bg-[#6CA9D6] text-white rounded-full font-black shadow-md scale-105' : isToday ? 'text-[#6CA9D6] font-black bg-[#BCE2F4] rounded-full border-[2px] border-white' : 'text-[#1E3A5F] font-bold hover:bg-[#F5FAFD] hover:border-[2px] hover:border-white hover:shadow-sm rounded-full'}`}>
+                    <span className="text-[13px] z-10 leading-none">{day}</span>
+                    {hasTasks && <div className="absolute bottom-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: isSelected ? COLORS.white : COLORS.pinkDeep }}></div>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    });
+
+    // ==========================================
+    // 🏠 Main Application
+    // ==========================================
+    function App() {
+      const [tasks, setTasks] = useState([]);
+      const [taskTypes, setTaskTypes] = useState(['Logo', 'Banner', 'Artwork']); 
+      const [channels, setChannels] = useState(['LINE', 'FB', 'IG']); 
+      
+      const [isLoading, setIsLoading] = useState(true); 
+      const [isSaving, setIsSaving] = useState(false);  
+      
+      const [view, setView] = useState('dashboard');
+      const [showModal, setShowModal] = useState(false);
+      const [editingTask, setEditingTask] = useState(null);
+      const [taskToDelete, setTaskToDelete] = useState(null); 
+      const [searchQuery, setSearchQuery] = useState('');
+      
+      const [profileImage, setProfileImage] = useState(null);
+      const [filterType, setFilterType] = useState('all'); 
+      const [selectedNextDate, setSelectedNextDate] = useState(''); 
+      
+      const [isAdmin, setIsAdmin] = useState(false);
+      const [showAuthModal, setShowAuthModal] = useState(false);
+      const [password, setPassword] = useState('');
+      const [authError, setAuthError] = useState(false);
+      const [isVerifyingAuth, setIsVerifyingAuth] = useState(false);
+
+      const [showImageModal, setShowImageModal] = useState(false);
+      const [tempImageUrl, setTempImageUrl] = useState('');
+      
+      const [bannerImage, setBannerImage] = useState(null);
+      const [isBannerVisible, setIsBannerVisible] = useState(true);
+      const [showBannerModal, setShowBannerModal] = useState(false);
+      const [tempBannerUrl, setTempBannerUrl] = useState('');
+
+      const [isBouncing, setIsBouncing] = useState(false);
+
+      const [isCalendarView, setIsCalendarView] = useState(false); 
+      const [currentMonth, setCurrentMonth] = useState(new Date()); 
+      const [selectedDate, setSelectedDate] = useState(() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }); 
+
+      // ==========================================
+      // 🌟 ตั้งค่าเชื่อมต่อ API (GitHub -> Google Sheets)
+      // ==========================================
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyw9stxTkkrQgfAVSWQoozb2dZIDW35wtmH4vLSM7M3KtQYTm08qj_nuN5cUYlBROFH/exec";
+
+      const fetchAPI = async (payload) => {
+        try {
+          const res = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            redirect: "follow",
+            body: JSON.stringify(payload)
+          });
+          return await res.json();
+        } catch (error) {
+          console.error("API Error:", error);
+          throw error;
+        }
+      };
+
+      useEffect(() => {
+        document.title = "♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ "; 
+        
+        fetch(WEB_APP_URL + "?action=getInitialData", { redirect: "follow" })
+          .then(res => res.json())
+          .then(response => {
+            if (response.status === 'success') {
+              setTasks(response.data.tasks || []);
+              if (response.data.taskTypes && response.data.taskTypes.length > 0) setTaskTypes(response.data.taskTypes);
+              if (response.data.channels && response.data.channels.length > 0) setChannels(response.data.channels);
+              if (response.data.profileImage) setProfileImage(response.data.profileImage);
+              if (response.data.bannerImage) setBannerImage(response.data.bannerImage);
+              if (response.data.bannerVisible !== undefined) setIsBannerVisible(response.data.bannerVisible);
+              if (response.data.lockedNextDate) setSelectedNextDate(response.data.lockedNextDate);
+            }
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error("Error loading data:", error);
+            setIsLoading(false);
+          });
+      }, []);
+
+      const handleAdminLogin = (e) => {
+        e.preventDefault();
+        setIsVerifyingAuth(true);
+        setAuthError(false);
+
+        fetchAPI({ action: 'verifyAdminPassword', inputPassword: password })
+          .then(res => {
+            setIsVerifyingAuth(false);
+            if (res.isValid) {
+              setIsAdmin(true); setShowAuthModal(false); setPassword(''); setAuthError(false);
+            } else setAuthError(true);
+          })
+          .catch(() => { setIsVerifyingAuth(false); setAuthError(true); });
+      };
+
+      const handleSetManualDate = useCallback((dateVal) => {
+        setSelectedNextDate(dateVal);
+        fetchAPI({ action: 'saveLockedNextDate', dateStr: dateVal }); 
+      }, []);
+      
+      const today = useMemo(() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }, []);
+      
+      const todayTasks = useMemo(() => tasks.filter(t => t.deadline === today), [tasks, today]);
+      const doneToday = useMemo(() => todayTasks.filter(t => t.status === 'done').length, [todayTasks]);
+      const progress = todayTasks.length === 0 ? 0 : Math.round((doneToday / todayTasks.length) * 100);
+
+      const nextQueueDate = useMemo(() => {
+        if (selectedNextDate) return selectedNextDate;
+        let checkDate = new Date();
+        for (let i = 0; i < 365; i++) {
+          const y = checkDate.getFullYear(); 
+          const m = String(checkDate.getMonth() + 1).padStart(2, '0');
+          const d = String(checkDate.getDate()).padStart(2, '0'); 
+          const dateStr = `${y}-${m}-${d}`;
+          if (tasks.filter(t => t.deadline === dateStr).length === 0) return dateStr;
+          checkDate.setDate(checkDate.getDate() + 1);
+        }
+        return today;
+      }, [tasks, selectedNextDate, today]);
+
+      const waitingCount = useMemo(() => tasks.filter(t => t.status !== 'done').length, [tasks]);
+
+      const toggleStatus = useCallback((e, id) => {
+        e.stopPropagation();
+        setTasks(prev => {
+          return prev.map(t => {
+            if (t.id === id) {
+              const newStatus = t.status === 'done' ? 'todo' : 'done';
+              fetchAPI({ action: 'updateTaskStatus', taskId: id, newStatus: newStatus });
+              return { ...t, status: newStatus };
+            }
+            return t;
+          });
+        });
+      }, []);
+
+      const toggleDoing = useCallback((e, id) => {
+        e.stopPropagation();
+        setTasks(prev => {
+          return prev.map(t => {
+            if (t.id === id) {
+              const newStatus = t.status === 'doing' ? 'todo' : 'doing';
+              fetchAPI({ action: 'updateTaskStatus', taskId: id, newStatus: newStatus });
+              return { ...t, status: newStatus };
+            }
+            return t;
+          });
+        });
+      }, []);
+
+      const handleEditTask = useCallback((task) => {
+        setEditingTask(task);
+        setShowModal(true);
+      }, []);
+
+      const handleSaveTask = (e) => {
+        e.preventDefault();
+        setIsSaving(true);
+        const formData = new FormData(e.target);
+        const taskData = {
+          id: editingTask ? editingTask.id : null,
+          title: '', 
+          client: formData.get('client'),
+          type: formData.get('type'), 
+          channel: formData.get('channel'),
+          priority: formData.get('priority') ? 'urgent' : 'normal', 
+          deadline: formData.get('deadline'),
+          details: formData.get('details'),
+        };
+
+        fetchAPI({ action: 'saveOrUpdateTask', task: taskData })
+          .then(res => {
+             if (res.status === 'success') {
+                setTasks(prev => editingTask ? prev.map(t => t.id === res.task.id ? res.task : t) : [...prev, res.task]);
+             }
+             setIsSaving(false); setShowModal(false); setEditingTask(null);
+          })
+          .catch(() => { setIsSaving(false); });
+      };
+
+      const executeDeleteTask = () => {
+        if (!taskToDelete) return;
+        setIsSaving(true);
+        fetchAPI({ action: 'deleteTask', taskId: taskToDelete })
+          .then(() => {
+             setTasks(prev => prev.filter(t => t.id !== taskToDelete));
+             setIsSaving(false); setShowModal(false); setEditingTask(null); setTaskToDelete(null);
+          })
+          .catch(() => { setIsSaving(false); });
+      };
+
+      const toggleBannerVisibility = (visible) => {
+        setIsBannerVisible(visible);
+        fetchAPI({ action: 'saveBannerVisibility', isVisible: visible });
+      };
+
+      const triggerFlowerBounce = useCallback(() => { setIsBouncing(true); setTimeout(() => setIsBouncing(false), 500); }, []);
+      const handleImageUpload = useCallback(() => { setShowImageModal(true); }, []);
+
+      const filteredAllTasks = useMemo(() => tasks.filter(t => {
+        const matchSearch = t.type.toLowerCase().includes(searchQuery.toLowerCase()) || t.client.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchFilter = filterType === 'all' || (filterType === 'pending' && t.status !== 'done') || (filterType === 'done' && t.status === 'done');
+        return matchSearch && matchFilter;
+      }), [tasks, searchQuery, filterType]);
+
+      const displayedTasks = isCalendarView 
+        ? filteredAllTasks.filter(t => t.deadline === selectedDate) 
+        : filteredAllTasks;
+
+      if (isLoading) {
+        return (
+          <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden" style={{ backgroundColor: COLORS.bg }}>
+             <DynamicBackground />
+             <div className="flex flex-col items-center z-10 animate-breathe">
+               <div className="flex items-center gap-1.5 px-6 py-2.5 bg-white/60 backdrop-blur-sm rounded-full border-[2px] border-white shadow-sm">
+                 <p className="text-[12px] font-black tracking-widest" style={{ color: COLORS.textMain }}>กำลังโหลดข้อมูล</p>
+                 <div className="flex gap-1 pt-1 ml-1">
+                   <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: COLORS.pinkDeep, animationDelay: '0s' }}></span>
+                   <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: COLORS.blueDeep, animationDelay: '0.15s' }}></span>
+                   <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: COLORS.purpleDeep, animationDelay: '0.3s' }}></span>
+                 </div>
+               </div>
+             </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="min-h-screen font-sans relative" style={{ backgroundColor: COLORS.bg, color: COLORS.textMain }}>
+          <DynamicBackground />
+          <div className="max-w-md mx-auto min-h-screen relative pb-28">
+            <Header isAdmin={isAdmin} setIsAdmin={setIsAdmin} setShowAuthModal={setShowAuthModal} handleImageUpload={handleImageUpload} profileImage={profileImage} />
+            
+            <div className="px-5 relative z-10 mb-4">
+               {bannerImage && isBannerVisible && (
+                 <div className="relative group w-full h-32 rounded-[24px] overflow-hidden shadow-sm border-[3px] border-white bg-white/40 backdrop-blur-sm">
+                    <img src={bannerImage} alt="Shop Banner" className="w-full h-full object-cover" />
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                       {isAdmin && (
+                         <button onClick={() => setShowBannerModal(true)} className="p-1.5 bg-white/90 backdrop-blur-md rounded-full shadow-sm text-gray-500 hover:text-[#6CA9D6] transition-colors" title="เปลี่ยนแบนเนอร์">
+                            <IconImage size={16} />
+                         </button>
+                       )}
+                       {isAdmin && (
+                         <button onClick={() => toggleBannerVisibility(false)} className="p-1.5 bg-white/90 backdrop-blur-md rounded-full shadow-sm text-gray-500 hover:text-[#4B6580] transition-colors" title="ซ่อนแบนเนอร์">
+                            <IconEyeOff size={16} />
+                         </button>
+                       )}
+                    </div>
+                 </div>
+               )}
+
+               {bannerImage && !isBannerVisible && isAdmin && (
+                 <div className="flex justify-end mb-1">
+                    <button onClick={() => toggleBannerVisibility(true)} className="text-[10px] font-bold flex items-center gap-1 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white shadow-sm hover:bg-white transition-colors" style={{ color: COLORS.textSoft }}>
+                       <IconEye size={12} /> แสดงแบนเนอร์
+                    </button>
+                 </div>
+               )}
+
+               {!bannerImage && isAdmin && (
+                 <div onClick={() => setShowBannerModal(true)} className="w-full h-16 rounded-[24px] border-[3px] border-dashed border-white bg-white/40 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/60 transition-colors">
+                    <span className="text-[11px] font-bold flex items-center gap-2" style={{ color: COLORS.textSoft }}><IconPlus size={16}/> เพิ่มรูปแบนเนอร์ร้าน</span>
+                 </div>
+               )}
+            </div>
+            
+            <div className="px-5 relative z-10">
+              {view === 'dashboard' ? (
+                <div className="animate-fadeIn">
+                  <div className="flex gap-3 h-28 mb-4">
+                    <div className="flex-[1.6]">
+                      <CompactStats isAdmin={isAdmin} selectedNextDate={selectedNextDate} nextQueueDate={nextQueueDate} handleSetManualDate={handleSetManualDate} waitingCount={waitingCount} />
+                    </div>
+                    <div className="flex-1">
+                      <ProgressFlower progress={progress} todayTasksLength={todayTasks.length} doneToday={doneToday} triggerFlowerBounce={triggerFlowerBounce} isBouncing={isBouncing} />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-2.5 ml-1">
+                    <h2 className="text-[10px] font-black text-gray-400 italic uppercase tracking-[0.3em] opacity-60">Today's Task</h2>
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#FCF6DE]/40 to-transparent mx-3"></div>
+                  </div>
+                  <div className="space-y-2">
+                    {todayTasks.length > 0 ? todayTasks.map(t => <TaskCard key={t.id} task={t} isAdmin={isAdmin} onEdit={handleEditTask} onToggleDoing={toggleDoing} onToggleStatus={toggleStatus} />) : (
+                      <div className="text-center py-10 bg-white/30 rounded-[28px] border-2 border-dashed border-[#9BCBE8]/50">
+                        <p className="text-[9px] font-bold uppercase tracking-widest opacity-40" style={{ color: COLORS.pinkDeep }}>Sky is clear ✨</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="animate-fadeIn">
+                  <div className="relative mb-4">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50" style={{ color: COLORS.blueDeep }}><IconSearch size={16} /></div>
+                    <input type="text" placeholder="ค้นหาคิวงาน..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white/80 border-2 rounded-[22px] py-3 pl-10 pr-4 outline-none text-xs shadow-lg shadow-[#6CA9D6]/10 focus:border-[#6CA9D6] transition-all backdrop-blur-sm" style={{ borderColor: COLORS.blue }} />
+                  </div>
+                  
+                  <div className="flex gap-2 mb-3 bg-white/50 p-1.5 rounded-full backdrop-blur-md border-[3px] border-white shadow-sm">
+                      <button onClick={() => setFilterType('all')} className={`flex-1 text-[9px] font-black py-2 rounded-full transition-all tracking-wider ${filterType === 'all' ? 'bg-white shadow-sm' : 'text-gray-400 hover:bg-white/30'}`} style={{ color: filterType === 'all' ? COLORS.pinkDeep : '' }}>ทั้งหมด</button>
+                      <button onClick={() => setFilterType('pending')} className={`flex-1 text-[9px] font-black py-2 rounded-full transition-all tracking-wider ${filterType === 'pending' ? 'bg-white shadow-sm' : 'text-gray-400 hover:bg-white/30'}`} style={{ color: filterType === 'pending' ? COLORS.orangeDeep : '' }}>ยังไม่ได้เริ่ม</button>
+                      <button onClick={() => setFilterType('done')} className={`flex-1 text-[9px] font-black py-2 rounded-full transition-all tracking-wider ${filterType === 'done' ? 'bg-white shadow-sm' : 'text-gray-400 hover:bg-white/30'}`} style={{ color: filterType === 'done' ? COLORS.blueDeep : '' }}>เสร็จแล้ว</button>
+                  </div>
+
+                  <div className="flex justify-end mb-4 pr-1">
+                    <button onClick={() => { 
+                      const newView = !isCalendarView;
+                      setIsCalendarView(newView); 
+                      if(newView) setFilterType('all'); 
+                    }} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/80 backdrop-blur-md rounded-full shadow-[0_4px_10px_rgba(188,226,244,0.8)] border-[2px] border-white text-[9px] font-black uppercase tracking-widest hover:text-[#6CA9D6] transition-all active:scale-95" style={{ color: COLORS.textSoft }}>
+                      {isCalendarView ? <><IconList size={14} /> รูปแบบรายการ</> : <><IconCalendar size={14} /> รูปแบบปฏิทิน</>}
+                    </button>
+                  </div>
+
+                  {isCalendarView && <CalendarView currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} selectedDate={selectedDate} setSelectedDate={setSelectedDate} today={today} tasks={tasks} />}
+
+                  <div className="space-y-2">
+                    {displayedTasks.length > 0 ? displayedTasks.map(t => <TaskCard key={t.id} task={t} isAdmin={isAdmin} onEdit={handleEditTask} onToggleDoing={toggleDoing} onToggleStatus={toggleStatus} />) : (
+                      <div className="text-center py-10 bg-white/30 rounded-[28px] border-[4px] border-dashed border-white shadow-sm mt-4">
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60" style={{ color: COLORS.textSoft }}>
+                          {isCalendarView ? "วันนี้คิวว่าง ✨" : "No records found ✨"}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-[210px] z-50">
+              <div className="bg-white/60 backdrop-blur-xl rounded-full h-14 shadow-2xl shadow-[#6CA9D6]/30 border border-white flex items-center justify-between px-6 relative">
+                  <button onClick={() => setView('dashboard')} className={`p-1 transition-all ${view === 'dashboard' ? 'scale-110' : 'text-gray-300 opacity-60'}`} style={{ color: view === 'dashboard' ? COLORS.pinkDeep : '' }}>
+                    <IconHome size={22} />
+                  </button>
+                  <div className="w-8"></div>
+                  <button onClick={() => setView('all')} className={`p-1 transition-all ${view === 'all' ? 'scale-110' : 'text-gray-300 opacity-60'}`} style={{ color: view === 'all' ? COLORS.blueDeep : '' }}>
+                    <IconFileText size={22} />
+                  </button>
+                  {isAdmin && (
+                    <div className="absolute left-1/2 -translate-x-1/2 -top-6">
+                      <button onClick={() => { setEditingTask(null); setShowModal(true); }} className="w-14 h-14 rounded-full text-white flex items-center justify-center shadow-xl shadow-[#6CA9D6]/50 active:scale-90 transition-transform border-[4px] border-white" style={{ background: `linear-gradient(to bottom right, ${COLORS.textMain}, ${COLORS.textSoft})` }}>
+                        <IconPlus size={24} />
+                      </button>
+                    </div>
+                  )}
+              </div>
+            </div>
+
+            {showModal && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/10 backdrop-blur-[2px] animate-fadeIn">
+                <form onSubmit={handleSaveTask} className="bg-white/95 backdrop-blur-xl w-full max-w-xs rounded-[35px] p-6 shadow-2xl border border-white animate-slideUp">
+                   <h3 className="text-sm font-black mb-4 text-center text-gray-800">{editingTask ? 'แก้ไขคิวงาน ✨' : 'เพิ่มคิวใหม่ ✨'}</h3>
+                   <div className="space-y-2 relative">
+                     {isSaving && (
+                        <div className="absolute inset-0 bg-white/80 z-50 flex flex-col items-center justify-center rounded-2xl backdrop-blur-sm">
+                           <IconLoader size={32} className="animate-spin-slow" style={{ color: COLORS.pinkDeep }} />
+                           <span className="text-[10px] font-black mt-2 text-gray-500">กำลังบันทึก...</span>
+                        </div>
+                     )}
+                     
+                     <div className="flex justify-end mb-1">
+                       <label className="flex items-center cursor-pointer gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                         <span className="text-[10px] font-bold text-gray-500">คิวด่วน 🔥</span>
+                         <div className="relative">
+                           <input type="checkbox" name="priority" value="urgent" defaultChecked={editingTask?.priority === 'urgent'} className="sr-only peer" />
+                           <div className={`w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[${COLORS.pinkDeep}]`}></div>
+                         </div>
+                       </label>
+                     </div>
+
+                     <input name="client" required defaultValue={editingTask?.client || ''} className="w-full p-3.5 rounded-2xl bg-white border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#BCE2F4] transition-all" placeholder="ชื่อลูกค้า" />
+                     
+                     <div className="flex flex-col gap-2">
+                        <input list="taskTypesList" name="type" required defaultValue={editingTask?.type || ''} className="w-full p-3.5 rounded-2xl font-black text-[10px] outline-none border border-gray-100 shadow-sm" placeholder="ประเภทงาน" />
+                        <datalist id="taskTypesList">
+                          {taskTypes.map(type => <option key={type} value={type} />)}
+                        </datalist>
+
+                        <input list="channelsList" name="channel" required defaultValue={editingTask?.channel || ''} className="w-full p-3.5 rounded-2xl font-black text-[10px] outline-none border border-gray-100 shadow-sm" placeholder="ช่องทาง" />
+                        <datalist id="channelsList">
+                          {channels.map(ch => <option key={ch} value={ch} />)}
+                        </datalist>
+                     </div>
+
+                     <textarea name="details" rows="2" defaultValue={editingTask?.details || ''} className="w-full p-3.5 rounded-2xl bg-white border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#BCE2F4] transition-all resize-none" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)..."></textarea>
+                     
+                     <div className="flex items-center justify-between bg-[#BCE2F4]/30 p-1.5 pl-4 rounded-2xl border border-[#FCF6DE]/50 transition-all hover:bg-[#BCE2F4]/80 hover:shadow-sm group mt-1">
+                       <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-black" style={{ color: COLORS.pinkDeep }}>
+                         <IconCalendar size={12} className="group-hover:animate-bounce-slow transition-transform" /><span>Deadline</span>
+                       </div>
+                       <input name="deadline" type="date" required defaultValue={editingTask?.deadline || nextQueueDate} className="w-32 p-2.5 rounded-xl bg-white border border-[#FCF6DE] outline-none text-[10px] font-black text-[#1E3A5F] shadow-sm focus:border-[#6CA9D6] focus:ring-2 focus:ring-[#6CA9D6]/50 transition-all cursor-pointer active:scale-95 hover:border-[#6CA9D6]" />
+                     </div>
+                     <div className="flex items-center gap-2 mt-3">
+                       <button type="submit" className="flex-1 py-3.5 rounded-2xl font-black text-xs text-white shadow-lg active:scale-95 transition-all disabled:opacity-50" style={{ backgroundColor: COLORS.textMain }}>บันทึกคิวงาน</button>
+                       {editingTask && (
+                         <button type="button" onClick={() => setTaskToDelete(editingTask.id)} className="w-12 h-[44px] flex items-center justify-center rounded-2xl bg-red-50 text-red-400 border border-red-100 hover:bg-red-100 active:scale-95 transition-all shadow-sm" title="ลบคิวงาน">
+                           <IconTrash size={18} />
+                         </button>
+                       )}
+                     </div>
+                     <button type="button" onClick={() => { setShowModal(false); setEditingTask(null); }} className="w-full text-[9px] font-bold text-gray-300 mt-2 uppercase tracking-widest">Close</button>
+                   </div>
+                </form>
+              </div>
+            )}
+
+            {showAuthModal && (
+              <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/10 backdrop-blur-[2px] animate-fadeIn">
+                <form onSubmit={handleAdminLogin} className="bg-white/95 backdrop-blur-xl w-full max-w-xs rounded-[35px] p-6 shadow-2xl border border-white animate-slideUp">
+                   <h3 className="text-sm font-black mb-4 text-center text-gray-800">เข้าสู่ระบบ Admin</h3>
+                   <div className="space-y-2">
+                     <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value); setAuthError(false); }} className={`w-full p-3.5 rounded-2xl bg-white border outline-none text-[11px] shadow-sm transition-all text-center tracking-widest ${authError ? 'border-red-300 focus:border-red-400' : 'border-gray-100 focus:border-[#BCE2F4]'}`} placeholder="ใส่รหัสผ่าน" disabled={isVerifyingAuth} />
+                     
+                     {authError && <p className="text-red-400 text-[9px] text-center font-bold">รหัสผ่านไม่ถูกต้อง!</p>}
+                     
+                     <button type="submit" disabled={isVerifyingAuth} className="w-full h-11 rounded-2xl font-black text-xs mt-3 text-white shadow-lg flex items-center justify-center active:scale-95 transition-all disabled:opacity-70" style={{ backgroundColor: COLORS.pinkDeep }}>
+                        {isVerifyingAuth ? <IconLoader size={16} className="animate-spin-slow" /> : 'Login'}
+                     </button>
+                     
+                     <button type="button" onClick={() => { setShowAuthModal(false); setAuthError(false); setPassword(''); }} className="w-full text-[9px] font-bold text-gray-300 mt-1 uppercase tracking-widest" disabled={isVerifyingAuth}>Close</button>
+                   </div>
+                </form>
+              </div>
+            )}
+
+            {showImageModal && (
+              <div className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-black/10 backdrop-blur-[2px] animate-fadeIn">
+                <form onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    if (tempImageUrl) { 
+                      let finalUrl = formatDriveLink(tempImageUrl); 
+                      setProfileImage(finalUrl); 
+                      fetchAPI({ action: 'saveProfileImage', imageUrl: finalUrl });
+                    } 
+                    setShowImageModal(false); 
+                    setTempImageUrl(''); 
+                  }} className="bg-white/95 backdrop-blur-xl w-full max-w-xs rounded-[35px] p-6 shadow-2xl border border-white animate-slideUp">
+                   <h3 className="text-sm font-black mb-4 text-center text-gray-800">เปลี่ยนรูปโปรไฟล์</h3>
+                   <div className="space-y-2">
+                     <input type="url" required value={tempImageUrl} onChange={(e) => setTempImageUrl(e.target.value)} className="w-full p-3.5 rounded-2xl bg-white border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#BCE2F4] transition-all text-center" placeholder="วางลิงก์รูปภาพ Google Drive ที่นี่..." />
+                     <button type="submit" className="w-full py-3.5 rounded-2xl font-black text-xs mt-3 text-white shadow-lg active:scale-95 transition-all" style={{ backgroundColor: COLORS.pinkDeep }}>Save Image</button>
+                     <button type="button" onClick={() => { setShowImageModal(false); setTempImageUrl(''); }} className="w-full text-[9px] font-bold text-gray-300 mt-1 uppercase tracking-widest">Close</button>
+                   </div>
+                </form>
+              </div>
+            )}
+
+            {showBannerModal && (
+              <div className="fixed inset-0 z-[120] flex items-center justify-center p-6 bg-black/10 backdrop-blur-[2px] animate-fadeIn">
+                <form onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    if (tempBannerUrl) { 
+                      let finalUrl = formatDriveLink(tempBannerUrl); 
+                      setBannerImage(finalUrl); 
+                      toggleBannerVisibility(true); 
+                      fetchAPI({ action: 'saveBannerImage', imageUrl: finalUrl });
+                    } 
+                    setShowBannerModal(false); 
+                    setTempBannerUrl(''); 
+                  }} className="bg-white/95 backdrop-blur-xl w-full max-w-xs rounded-[35px] p-6 shadow-2xl border border-white animate-slideUp">
+                   <h3 className="text-sm font-black mb-4 text-center text-gray-800">เปลี่ยนแบนเนอร์</h3>
+                   <div className="space-y-2">
+                     <input type="url" required value={tempBannerUrl} onChange={(e) => setTempBannerUrl(e.target.value)} className="w-full p-3.5 rounded-2xl bg-white border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#BCE2F4] transition-all text-center" placeholder="วางลิงก์รูปภาพ Google Drive..." />
+                     <button type="submit" className="w-full py-3.5 rounded-2xl font-black text-xs mt-3 text-white shadow-lg active:scale-95 transition-all" style={{ backgroundColor: COLORS.orangeDeep }}>Save Banner</button>
+                     <button type="button" onClick={() => { setShowBannerModal(false); setTempBannerUrl(''); }} className="w-full text-[9px] font-bold text-gray-300 mt-1 uppercase tracking-widest">Close</button>
+                   </div>
+                </form>
+              </div>
+            )}
+
+            {taskToDelete && (
+              <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/20 backdrop-blur-[2px] animate-fadeIn">
+                <div className="bg-white/95 backdrop-blur-xl w-full max-w-[260px] rounded-[30px] p-6 shadow-2xl border border-white animate-slideUp text-center">
+                  <div className="w-14 h-14 rounded-full bg-red-50 text-red-400 flex items-center justify-center mx-auto mb-3 shadow-sm border border-red-100">
+                     <IconTrash size={26} />
+                  </div>
+                  <h3 className="text-[14px] font-black mb-1 text-gray-800">ยืนยันการลบ?</h3>
+                  <p className="text-[10px] font-bold text-gray-500 mb-5">คุณต้องการลบคิวงานนี้ใช่หรือไม่<br/>(ไม่สามารถกู้คืนได้)</p>
+                  
+                  <div className="flex gap-2">
+                    <button onClick={() => setTaskToDelete(null)} className="flex-1 py-3 rounded-2xl font-black text-[10px] text-gray-500 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all shadow-sm">ยกเลิก</button>
+                    <button onClick={executeDeleteTask} className="flex-1 py-3 rounded-2xl font-black text-[10px] text-white bg-red-400 hover:bg-red-500 active:scale-95 transition-all shadow-sm">ลบข้อมูล</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+          
+          <style>{`
+            @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(25px, -15px); } }
+            @keyframes float-reverse { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-25px, 15px); } }
+            @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+            @keyframes float-particle-1 { 0% { transform: translateY(0); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-20px); opacity: 0; } }
+            @keyframes float-particle-2 { 0% { transform: translateY(0); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-15px) translateX(5px); opacity: 0; } }
+            @keyframes float-particle-3 { 0% { transform: translateY(0); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-25px) translateX(-5px); opacity: 0; } }
+            @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+            @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes text-wave { 0%, 20%, 100% { transform: translateY(0px); } 10% { transform: translateY(-5px); } }
+            @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            
+            .animate-text-wave { animation: text-wave 4s ease-in-out infinite; }
+            .animate-breathe { animation: breathe 4s ease-in-out infinite; transform-origin: center; }
+            .animate-float-particle-1 { animation: float-particle-1 3s ease-out infinite; }
+            .animate-float-particle-2 { animation: float-particle-2 4s ease-out infinite 1s; }
+            .animate-float-particle-3 { animation: float-particle-3 3.5s ease-out infinite 0.5s; }
+            .animate-float { animation: float 15s ease-in-out infinite; }
+            .animate-float-reverse { animation: float-reverse 18s ease-in-out infinite; }
+            .animate-bounce-slow { animation: bounce-slow 4s ease-in-out infinite; }
+            .animate-slideUp { animation: slideUp 0.3s ease-out; }
+            .animate-fadeIn { animation: fadeIn 0.4s ease-out; }
+            .animate-spin-slow { animation: spin-slow 4s linear infinite; }
+          `}</style>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
+
+
+
+
