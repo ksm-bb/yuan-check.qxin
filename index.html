@@ -109,16 +109,16 @@
           <div className="flex flex-col justify-center ml-2 relative z-10">
             <div className="flex items-center gap-1">
               <h1 className="text-2xl font-black italic tracking-tighter flex">
-                {"♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ ".split('').map((char, index) => (
-                  <span
-                    key={index}
-                    className={`bg-gradient-to-br from-[#99C3E4] to-[#C1E4F3] bg-clip-text text-transparent drop-shadow-sm inline-block animate-text-wave pb-2 ${char === ' ' ? 'w-2.5' : 'pr-[1.5px]'}`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </h1>
+  {[..."♡⠀𝓒𝗁𝖾𝖼𝕜 𝗤  ⇣ "].map((char, index) => (
+    <span
+      key={index}
+      className={`bg-gradient-to-br from-[#99C3E4] to-[#C1E4F3] bg-clip-text text-transparent drop-shadow-sm inline-block animate-text-wave pb-2 ${char === ' ' ? 'w-2.5' : 'pr-[1.5px]'}`}
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      {char}
+    </span>
+  ))}
+</h1>
               <button onClick={() => isAdmin ? setIsAdmin(false) : setShowAuthModal(true)} className={`px-1.5 py-0.5 ml-1 rounded-full text-[7px] font-black uppercase tracking-widest border shadow-sm transition-all active:scale-95 ${isAdmin ? 'bg-white/60 text-[#6CA9D6] border-[#FCF6DE]' : 'bg-gray-100/80 text-gray-400 border-gray-200'}`}>
                 {isAdmin ? 'Admin' : 'Guest'}
               </button>
@@ -861,6 +861,7 @@
 </body>
 
 </html>
+
 
 
 
